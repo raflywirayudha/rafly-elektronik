@@ -1,0 +1,15 @@
+---
+const brands = [
+  { src: "/rinnai.png", alt: "Logo Rinnai", className: "w-32" },
+  { src: "/shimizu.png", alt: "Logo Shimizu", className: "w-32" },
+  { src: "/miyako.png", alt: "Logo Miyako", className: "w-[150px]" },
+];
+---
+
+<section class="border-y border-line/70 bg-white py-7" aria-label="Mitra resmi brand">
+    <div class="flex items-center justify-center gap-6 sm:gap-10">
+      {brands.map((brand) => (
+        <img src={brand.src} alt={brand.alt} class={`h-10 object-contain ${brand.className}`} />
+      ))}
+    </div>
+</section>

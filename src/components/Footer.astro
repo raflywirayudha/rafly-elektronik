@@ -1,0 +1,31 @@
+---
+const quickLinks = [
+  { href: "#layanan", label: "Layanan" },
+  { href: "#lokasi", label: "Lokasi" },
+  { href: "#kontak", label: "Kontak" },
+];
+---
+
+<footer class="bg-linear-to-br from-footer to-navy py-10 text-sm text-[#aabfcd]">
+  <div class="container flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+    <a href="#beranda" class="flex items-center gap-2.5 font-display text-lg font-bold text-white">
+      <span
+        class="grid h-9 w-9 place-items-center rounded-[11px_11px_11px_3px] bg-linear-to-br from-navy via-blue to-orange text-sm text-white shadow-[0_8px_16px_rgba(16,42,67,0.18)]"
+        aria-hidden="true"
+      >
+        RE
+      </span>
+      <span>Rafly Elektronik</span>
+    </a>
+
+    <p>© 2026 Rafly Elektronik. Servis resmi elektronik Tembilahan.</p>
+
+    <nav class="flex flex-wrap gap-5" aria-label="Footer">
+      {quickLinks.map((link) => (
+        <a href={link.href} class="transition-colors hover:text-white">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</footer>

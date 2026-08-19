@@ -1,0 +1,49 @@
+---
+import "../styles/global.css";
+
+const {
+  title = "Rafly Elektronik | Servis Resmi Elektronik Tembilahan",
+  description = "Servis resmi kompor gas Rinnai, pompa air Shimizu, dan peralatan Miyako di Tembilahan, Indragiri Hilir. Teknisi berpengalaman dan sparepart original.",
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Rafly Elektronik",
+  description: "Authorized Service Center elektronik rumah tangga di Tembilahan.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Jl. H. Khalidi No. 47",
+    addressLocality: "Tembilahan Kota",
+    addressRegion: "Riau",
+    postalCode: "29214",
+    addressCountry: "ID",
+  },
+  areaServed: "Tembilahan dan Indragiri Hilir",
+  url: "https://raflyelektronik.com",
+};
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#102a43" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

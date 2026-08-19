@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import heroUrl from "../assets/hero.jpg";
+---
+
+<section id="beranda" class="relative flex items-center overflow-hidden min-h-dvh">
+  <Image
+    src={heroUrl}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 h-full w-full object-cover"
+    sizes="100vw"
+    fetchpriority="high"
+    decoding="async"
+  />
+
+  <div
+    class="absolute inset-0 bg-linear-to-r from-black to-navy/60"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container relative py-20">
+    <div class="max-w-200">
+      <p class="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ember">
+        Servis resmi, solusi pasti
+      </p>
+      <h1
+        class="mt-4 mb-6 font-display text-[clamp(2.7rem,7vw,5rem)] leading-[1.08] tracking-[-0.065em] text-white"
+      >
+        Peralatan rumah rusak? <br /> Kami bantu pulihkan.
+      </h1>
+      <p class="max-w-[700px] text-lg text-[#dce9f2]">
+        Rafly Elektronik melayani servis kompor gas Rinnai, pompa air Shimizu,
+        dan peralatan Miyako di Tembilahan dengan teknisi berpengalaman serta
+        suku cadang original.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#kontak" class="btn btn-primary">
+          Hubungi via WhatsApp <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          href="#layanan"
+          class="btn border border-white/30 bg-white/10 text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
+        >
+          Lihat layanan <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+     
+    </div>
+  </div>
+</section>

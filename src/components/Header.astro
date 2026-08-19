@@ -1,0 +1,162 @@
+---
+const navItems = [
+  { href: "#layanan", label: "Layanan" },
+  { href: "#tentang", label: "Tentang Kami" },
+  { href: "#lokasi", label: "Lokasi" },
+  { href: "#kontak", label: "Kontak" },
+];
+---
+
+<header id="siteHeader" class="site-header fixed inset-x-0 top-0 z-20 border-b border-transparent bg-transparent">
+  <nav class="container flex min-h-[76px] items-center justify-between gap-6">
+    <a href="#beranda" class="brand flex items-center gap-2.5 font-display text-lg font-bold text-white">
+      <span
+        class="grid h-9 w-9 place-items-center rounded-[11px_11px_11px_3px] bg-linear-to-br from-navy via-blue to-orange text-sm text-white shadow-[0_8px_16px_rgba(16,42,67,0.18)]"
+        aria-hidden="true"
+      >
+        RE
+      </span>
+      <span>Rafly Elektronik</span>
+    </a>
+
+    <div id="navLinks" class="nav-links">
+      {navItems.map((item) => (
+        <a href={item.href} class="nav-link">
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- <a href="#kontak" class="btn btn-primary hidden lg:inline-flex">
+      Chat WhatsApp <span aria-hidden="true">↗</span>
+    </a> -->
+
+    <button
+      id="menuToggle"
+      type="button"
+      class="menu-toggle grid h-11 w-11 place-items-center text-white lg:hidden"
+      aria-label="Buka menu"
+      aria-controls="navLinks"
+      aria-expanded="false"
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      backdrop-filter 0.25s ease;
+  }
+
+  .site-header.scrolled {
+    background: rgb(251 250 247 / 0.88);
+    border-bottom-color: rgb(219 229 236 / 0.8);
+    box-shadow: 0 8px 24px rgb(16 42 67 / 0.07);
+    backdrop-filter: blur(18px);
+  }
+
+  .site-header.scrolled .brand {
+    color: var(--color-navy);
+  }
+
+  .site-header.scrolled .nav-link {
+    color: #496277;
+  }
+
+  .site-header.scrolled .menu-toggle {
+    color: var(--color-navy);
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.86);
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-ember);
+  }
+
+  .site-header.scrolled .nav-link:hover {
+    color: var(--color-orange-dark);
+  }
+
+  @media (min-width: 1024px) {
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 1023.98px) {
+    .nav-links {
+      position: absolute;
+      inset-inline: 1.25rem;
+      top: 4.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      padding: 0.625rem;
+      background: var(--color-cream);
+      border: 1px solid var(--color-line);
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgb(16 42 67 / 0.08);
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-link {
+      padding: 0.75rem;
+      border-radius: 8px;
+      color: #496277;
+    }
+
+    .nav-link:hover {
+      background: rgb(242 155 56 / 0.08);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("menuToggle");
+  const panel = document.getElementById("navLinks");
+  const header = document.getElementById("siteHeader");
+
+  const updateHeader = () => {
+    header.classList.toggle("scrolled", window.scrollY > 24);
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  toggle?.addEventListener("click", () => {
+    const open = panel.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+
+  panel.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => panel.classList.remove("open")),
+  );
+</script>

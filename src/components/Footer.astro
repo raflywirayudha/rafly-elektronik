@@ -1,16 +1,19 @@
 ---
+import { business } from "../data/business";
+
 const quickLinks = [
+  { href: "#tentang", label: "Tentang Kami" },
   { href: "#layanan", label: "Layanan" },
   { href: "#lokasi", label: "Lokasi" },
   { href: "#kontak", label: "Kontak" },
 ];
 ---
 
-<footer class="bg-linear-to-br from-footer to-navy py-10 text-sm text-[#aabfcd]">
-  <div class="container flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+<footer class="border-t border-white/10 bg-footer py-12 text-sm text-[#aabfcd]">
+  <div class="container flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
     <a href="#beranda" class="flex items-center gap-2.5 font-display text-lg font-bold text-white">
       <span
-        class="grid h-9 w-9 place-items-center rounded-[11px_11px_11px_3px] bg-linear-to-br from-navy via-blue to-orange text-sm text-white shadow-[0_8px_16px_rgba(16,42,67,0.18)]"
+        class="grid h-10 w-10 place-items-center border border-orange bg-orange text-xs font-bold tracking-[0.08em] text-navy"
         aria-hidden="true"
       >
         RE
@@ -18,9 +21,9 @@ const quickLinks = [
       <span>Rafly Elektronik</span>
     </a>
 
-    <p>© 2026 Rafly Elektronik. Servis resmi elektronik Tembilahan.</p>
+    <p>© 2026 {business.name}. Servis resmi elektronik Tembilahan.</p>
 
-    <nav class="flex flex-wrap gap-5" aria-label="Footer">
+    <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
       {quickLinks.map((link) => (
         <a href={link.href} class="transition-colors hover:text-white">
           {link.label}

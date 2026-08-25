@@ -1,41 +1,48 @@
 ---
+import { business } from "../data/business";
+
 const details = [
-  { label: "WhatsApp", value: "0822-8888-XXXX" },
-  { label: "Telepon", value: "0812-7616-XXXX" },
-  { label: "Email", value: "bass.XXXXXX@gmail.com" },
+  { label: "WhatsApp", value: business.contact.whatsapp },
+  { label: "Telepon", value: business.contact.phone },
+  { label: "Email", value: business.contact.email },
 ];
 ---
 
-<section id="kontak" class="pb-24 pt-8 lg:pb-28 lg:pt-10">
+<section id="kontak" class="pb-24 pt-8 lg:pb-32 lg:pt-10">
   <div class="container">
-    <div class="rounded-[3px] bg-linear-to-r from-gold via-amber to-orange p-9 shadow-[0_18px_35px_rgba(16,42,67,0.1)] lg:grid lg:grid-cols-[1fr_0.85fr] lg:gap-14 lg:p-14">
-      <div>
-        <p class="kicker">Butuh bantuan?</p>
-        <h2 class="mt-3 font-display text-[clamp(2.25rem,4vw,3rem)] leading-[1.05] tracking-[-0.05em] text-navy">
+    <div class="relative overflow-hidden border-t-4 border-orange bg-navy p-8 shadow-[10px_10px_0_rgba(9,34,56,0.12)] lg:grid lg:grid-cols-[1fr_0.85fr] lg:gap-14 lg:p-14">
+      <div class="pointer-events-none absolute inset-0 opacity-25 soft-grid" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rotate-12 border border-white/10 shadow-[24px_24px_0_rgba(255,255,255,0.025),48px_48px_0_rgba(229,138,34,0.05)]" aria-hidden="true"></div>
+      <div class="relative">
+        <p class="section-label kicker text-orange">Butuh bantuan?</p>
+        <h2 class="mt-3 font-display text-[clamp(2.25rem,4vw,3rem)] leading-[1.05] tracking-[-0.05em] text-white">
           Ceritakan masalah perangkat Anda.
         </h2>
-        <p class="mt-4 max-w-[520px] text-[#62451f]">
+        <p class="mt-4 max-w-[520px] text-[#b7cad5]">
           Kontak kami untuk menanyakan ketersediaan servis, estimasi pengecekan,
           atau lokasi toko.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#kontak" class="btn btn-dark" data-whatsapp>
-            Chat WhatsApp <span aria-hidden="true">↗</span>
+          <a href="#kontak" class="btn btn-primary" data-whatsapp>
+            Chat WhatsApp
+            <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M4 10h12M11 5l5 5-5 5" />
+            </svg>
           </a>
-          <a href="#kontak" class="btn btn-outline" data-phone>
+          <a href="#kontak" class="btn border-white/35 text-white hover:border-orange hover:text-orange" data-phone>
             Telepon toko
           </a>
         </div>
       </div>
 
-      <div class="pt-6 lg:border-l lg:border-navy/25 lg:pl-8 lg:pt-0">
+      <div class="relative mt-8 border border-white/15 bg-white/5 p-6 lg:mt-0 lg:p-8">
         {details.map((detail) => (
-          <p class="mb-4 text-sm text-[#62451f]">
-            <strong class="block font-display text-base text-navy">{detail.label}</strong>
+          <p class="border-b border-white/15 py-3 text-sm text-[#b7cad5] first:pt-0">
+            <strong class="block font-display text-base text-white">{detail.label}</strong>
             {detail.value}
           </p>
         ))}
-        <p class="mt-6 text-sm text-[#62451f]">
+        <p class="mt-5 text-xs leading-relaxed text-[#8fa9b9]">
           Nomor lengkap akan diperbarui setelah dikonfirmasi.
         </p>
       </div>

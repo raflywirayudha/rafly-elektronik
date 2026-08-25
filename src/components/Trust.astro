@@ -19,27 +19,27 @@ const reasons = [
 ];
 ---
 
-<section class="relative overflow-hidden bg-linear-to-tr from-navy via-blue to-orange py-24 text-[#e9f1f5] lg:py-[105px]">
+<section class="relative overflow-hidden bg-navy py-24 text-[#e9f1f5] lg:py-[120px]">
   <div
-    class="pointer-events-none absolute -top-[180px] -right-[170px] h-[420px] w-[420px] rounded-full border border-white/15 shadow-[0_0_0_35px_rgba(255,255,255,0.04),0_0_0_70px_rgba(255,255,255,0.03)]"
+    class="pointer-events-none absolute -top-36 -right-28 h-[380px] w-[380px] rotate-12 border border-white/10 shadow-[32px_32px_0_rgba(255,255,255,0.025),64px_64px_0_rgba(229,138,34,0.05)]"
     aria-hidden="true"
   ></div>
+  <div class="pointer-events-none absolute inset-0 opacity-30 soft-grid" aria-hidden="true"></div>
 
   <div class="container relative grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
     <div>
-      <p class="kicker text-ember">Alasan memilih kami</p>
+      <p class="section-label kicker text-ember">Alasan memilih kami</p>
       <h2 class="mt-3 max-w-md font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-[1.08] tracking-[-0.055em] text-white">
         Servis yang jujur, rapi, dan bisa diandalkan.
       </h2>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-2">
+    <div class="grid gap-px border border-white/15 bg-white/15 sm:grid-cols-2">
       {reasons.map((reason, index) => (
-        <div class="border-t border-white/20 pt-4">
-          <p class="mb-1.5 font-display text-base text-white">
-            {String(index + 1).padStart(2, "0")} / {reason.heading}
-          </p>
-          <p class="text-sm text-[#aac0ce]">{reason.text}</p>
+        <div class="group bg-navy/95 p-6 transition-colors duration-200 hover:bg-blue/70">
+          <p class="mb-4 text-xs font-bold tracking-[0.16em] text-orange">{String(index + 1).padStart(2, "0")}</p>
+          <h3 class="mb-2 font-display text-base text-white">{reason.heading}</h3>
+          <p class="text-sm text-[#b7cad5]">{reason.text}</p>
         </div>
       ))}
     </div>

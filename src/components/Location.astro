@@ -1,8 +1,12 @@
-<section id="lokasi" class="py-24 lg:py-[105px]">
+---
+import { business } from "../data/business";
+---
+
+<section id="lokasi" class="soft-grid bg-cream/70 py-24 lg:py-[120px]">
   <div class="container">
     <div class="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end lg:mb-12">
       <div>
-        <p class="kicker">Datang langsung</p>
+        <p class="section-label kicker">Datang langsung</p>
         <h2 class="mt-3 max-w-[650px] font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-[1.08] tracking-[-0.055em] text-navy">
           Temukan kami di Tembilahan Kota.
         </h2>
@@ -13,34 +17,29 @@
     </div>
 
     <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-      <div class="rounded-[3px] bg-linear-to-tr from-navy via-blue to-orange p-9 text-[#dce9f2] shadow-[0_16px_30px_rgba(16,42,67,0.14)]">
-        <h2 class="font-display text-4xl tracking-[-0.02em] text-white">Lokasi toko</h2>
+      <div class="relative overflow-hidden border-t-4 border-orange bg-navy p-8 text-[#dce9f2] shadow-[8px_8px_0_rgba(9,34,56,0.12)] sm:p-9">
+        <div class="pointer-events-none absolute -right-12 -bottom-12 h-44 w-44 rotate-12 border border-white/10" aria-hidden="true"></div>
+        <h3 class="font-display text-4xl tracking-[-0.02em] text-white">Lokasi toko</h3>
 
-        <div class="my-7 flex gap-3.5 text-[0.94rem]">
-          <span class="text-orange" aria-hidden="true">⌖</span>
+        <div class="relative my-7 flex gap-3.5 text-[0.94rem]">
+          <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-orange" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
           <span>
-            Jl. H. Khalidi No. 47, Kel. Tembilahan Kota, Kec. Tembilahan, Kab.
-            Indragiri Hilir, Riau 29214
+            {business.address.formatted}
           </span>
         </div>
 
         <div class="border-y border-white/20 py-4 text-sm">
           <strong class="text-white">Jam operasional</strong>
           <br />
-          Segera dikonfirmasi oleh Rafly Elektronik
+          {business.openingHours}
         </div>
 
-        <a
-          href="https://www.google.com/maps/search/?api=1&query=Rafly+Elektronik+Jl.+H.+Khalidi+47+Tembilahan"
-          target="_blank"
-          rel="noopener"
-          class="btn btn-primary mt-7"
-        >
-          Buka di Google Maps <span aria-hidden="true">↗</span>
-        </a>
       </div>
 
-      <div class="overflow-hidden rounded-[3px]">
+      <div class="overflow-hidden border border-line bg-white p-2 shadow-[8px_8px_0_rgba(9,34,56,0.08)]">
         <iframe
           title="Peta lokasi Rafly Elektronik di Tembilahan"
           loading="lazy"

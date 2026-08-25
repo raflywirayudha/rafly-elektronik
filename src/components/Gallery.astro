@@ -15,25 +15,21 @@ const photos = Object.entries(imageModules)
   .sort((a, b) => Number(a.label) - Number(b.label));
 ---
 
-<section id="galeri" class="py-24 lg:py-[105px]">
+<section id="galeri" class="border-b border-line/80 bg-white py-24 lg:py-[120px]">
   <div class="container">
     <div class="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end lg:mb-12">
       <div>
-        <p class="kicker">Galeri</p>
         <h2 class="mt-3 max-w-[650px] font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-[1.08] tracking-[-0.055em] text-navy">
-          Lihat hasil kerja kami.
+          Galeri
         </h2>
       </div>
-      <p class="max-w-[400px] text-muted">
-        Sampel pekerjaan servis dan kondisi toko Rafly Elektronik.
-      </p>
     </div>
 
     <div class="columns-1 gap-4 sm:columns-2 lg:columns-3">
       {photos.map((photo, index) => (
         <button
           type="button"
-          class="group mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-[3px] border border-line/70 transition-transform duration-200 focus-visible:outline-offset-2 hover:-translate-y-1"
+          class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden border border-line bg-cream transition duration-300 focus-visible:outline-offset-2 hover:z-1 hover:-translate-y-1 hover:border-orange hover:shadow-[7px_7px_0_rgba(9,34,56,0.12)]"
           data-lightbox-open={index}
           aria-label={`Buka foto galeri ${photo.label} dalam tampilan besar`}
         >
@@ -44,6 +40,9 @@ const photos = Object.entries(imageModules)
             loading="lazy"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
+          <span class="absolute right-0 bottom-0 border-t border-l border-white/25 bg-navy/90 px-3 py-2 text-[0.65rem] font-bold tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            LIHAT FOTO {String(index + 1).padStart(2, "0")}
+          </span>
         </button>
       ))}
     </div>
@@ -52,7 +51,7 @@ const photos = Object.entries(imageModules)
 
 <dialog
   id="lightbox"
-  class="m-auto w-[min(1100px,92vw)] max-h-[92vh] overflow-hidden rounded-[3px] border-0 bg-navy p-0 text-white shadow-2xl backdrop:bg-navy/85"
+  class="m-auto max-h-[92vh] w-[min(1100px,92vw)] overflow-hidden border border-white/15 bg-navy p-0 text-white shadow-2xl backdrop:bg-navy/90"
   aria-label="Tampilan besar foto galeri"
 >
   <div class="relative">
@@ -60,29 +59,35 @@ const photos = Object.entries(imageModules)
     <button
       id="lightboxPrev"
       type="button"
-      class="absolute top-1/2 left-4 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-navy/60 text-xl backdrop-blur transition-colors hover:bg-navy"
+      class="absolute top-1/2 left-3 grid h-12 w-12 -translate-y-1/2 place-items-center border border-white/30 bg-navy/75 backdrop-blur transition-colors hover:border-orange hover:bg-navy sm:left-4"
       aria-label="Foto sebelumnya"
     >
-      ‹
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
     </button>
     <button
       id="lightboxNext"
       type="button"
-      class="absolute top-1/2 right-4 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-navy/60 text-xl backdrop-blur transition-colors hover:bg-navy"
+      class="absolute top-1/2 right-3 grid h-12 w-12 -translate-y-1/2 place-items-center border border-white/30 bg-navy/75 backdrop-blur transition-colors hover:border-orange hover:bg-navy sm:right-4"
       aria-label="Foto berikutnya"
     >
-      ›
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="m9 18 6-6-6-6" />
+      </svg>
     </button>
     <button
       id="lightboxClose"
       type="button"
-      class="absolute top-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-navy/60 text-lg backdrop-blur transition-colors hover:bg-navy"
+      class="absolute top-3 right-3 grid h-11 w-11 place-items-center border border-white/30 bg-navy/75 backdrop-blur transition-colors hover:border-orange hover:bg-navy"
       aria-label="Tutup tampilan besar"
     >
-      ✕
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" />
+      </svg>
     </button>
   </div>
-  <p id="lightboxCaption" class="px-4 py-2 text-center text-xs tracking-wide text-[#aac0ce]"></p>
+  <p id="lightboxCaption" class="px-4 py-2 text-center text-xs tracking-wide text-[#aac0ce]" aria-live="polite"></p>
 </dialog>
 
 <script>
@@ -92,45 +97,68 @@ const photos = Object.entries(imageModules)
   const nextBtn = document.getElementById("lightboxNext");
   const closeBtn = document.getElementById("lightboxClose");
   const caption = document.getElementById("lightboxCaption");
-  const images = Array.from(document.querySelectorAll("[data-lightbox-open]"));
+  const images = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-lightbox-open]"),
+  );
 
   let current = 0;
 
-  const update = () => {
-    imageEl.src = images[current].querySelector("img").getAttribute("src");
-    imageEl.alt = images[current].querySelector("img").getAttribute("alt");
-    caption.textContent = `Foto ${current + 1} dari ${images.length}`;
-  };
+  if (
+    dialog instanceof HTMLDialogElement &&
+    imageEl instanceof HTMLImageElement &&
+    prevBtn instanceof HTMLButtonElement &&
+    nextBtn instanceof HTMLButtonElement &&
+    closeBtn instanceof HTMLButtonElement &&
+    caption instanceof HTMLElement &&
+    images.length > 0
+  ) {
+    const update = () => {
+      const source = images[current]?.querySelector<HTMLImageElement>("img");
+      if (!source) return;
 
-  const open = (index) => {
-    current = index;
-    update();
-    dialog.showModal();
-  };
+      imageEl.src = source.currentSrc || source.src;
+      imageEl.alt = source.alt;
+      caption.textContent = `Foto ${current + 1} dari ${images.length}`;
+    };
 
-  images.forEach((img, index) =>
-    img.addEventListener("click", () => open(index)),
-  );
+    const open = (index: number) => {
+      current = index;
+      update();
+      dialog.showModal();
+    };
 
-  prevBtn.addEventListener("click", () => {
-    current = (current - 1 + images.length) % images.length;
-    update();
-  });
+    images.forEach((image, index) =>
+      image.addEventListener("click", () => open(index)),
+    );
 
-  nextBtn.addEventListener("click", () => {
-    current = (current + 1) % images.length;
-    update();
-  });
+    prevBtn.addEventListener("click", () => {
+      current = (current - 1 + images.length) % images.length;
+      update();
+    });
 
-  closeBtn.addEventListener("click", () => dialog.close());
+    nextBtn.addEventListener("click", () => {
+      current = (current + 1) % images.length;
+      update();
+    });
 
-  dialog.addEventListener("click", (event) => {
-    if (event.target === dialog) dialog.close();
-  });
+    closeBtn.addEventListener("click", () => dialog.close());
 
-  document.addEventListener("keydown", (event) => {
-    if (!dialog.open) return;
-    if (event.key === "ArrowLeft") prevBtn.click();
-    if (event.key === "ArrowRight") nextBtn.click();
-  });
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener("close", () => images[current]?.focus());
+
+    document.addEventListener("keydown", (event) => {
+      if (!dialog.open) return;
+       if (event.key === "ArrowLeft") {
+         event.preventDefault();
+         prevBtn.click();
+       }
+       if (event.key === "ArrowRight") {
+         event.preventDefault();
+         nextBtn.click();
+       }
+    });
+  }
 </script>

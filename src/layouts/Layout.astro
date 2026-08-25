@@ -1,26 +1,30 @@
 ---
 import "../styles/global.css";
+import { business } from "../data/business";
 
 const {
-  title = "Rafly Elektronik | Servis Resmi Elektronik Tembilahan",
-  description = "Servis resmi kompor gas Rinnai, pompa air Shimizu, dan peralatan Miyako di Tembilahan, Indragiri Hilir. Teknisi berpengalaman dan sparepart original.",
+  title = `${business.name} | Servis Resmi Elektronik Tembilahan`,
+  description = business.description,
 } = Astro.props;
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "Rafly Elektronik",
-  description: "Authorized Service Center elektronik rumah tangga di Tembilahan.",
+  name: business.name,
+  description: business.description,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Jl. H. Khalidi No. 47",
-    addressLocality: "Tembilahan Kota",
-    addressRegion: "Riau",
-    postalCode: "29214",
-    addressCountry: "ID",
+    streetAddress: business.address.street,
+    addressLocality: business.address.locality,
+    addressRegion: business.address.region,
+    postalCode: business.address.postalCode,
+    addressCountry: business.address.country,
   },
+  telephone: business.contact.phone,
+  email: business.contact.email,
+  openingHours: business.openingHours,
   areaServed: "Tembilahan dan Indragiri Hilir",
-  url: "https://raflyelektronik.com",
+  url: business.url,
 };
 ---
 
@@ -29,9 +33,19 @@ const schema = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#102a43" />
+    <meta name="theme-color" content="#092238" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={business.url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={business.url} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
@@ -41,7 +55,7 @@ const schema = {
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
     <slot />

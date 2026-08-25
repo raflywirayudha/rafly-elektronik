@@ -8,15 +8,12 @@ const navItems = [
 ---
 
 <header id="siteHeader" class="site-header fixed inset-x-0 top-0 z-20 border-b border-transparent bg-transparent">
-  <nav class="container flex min-h-[76px] items-center justify-between gap-6">
+  <nav class="container flex min-h-[80px] items-center justify-between gap-6" aria-label="Navigasi utama">
     <a href="#beranda" class="brand flex items-center gap-2.5 font-display text-lg font-bold text-white">
-      <span
-        class="grid h-9 w-9 place-items-center rounded-[11px_11px_11px_3px] bg-linear-to-br from-navy via-blue to-orange text-sm text-white shadow-[0_8px_16px_rgba(16,42,67,0.18)]"
-        aria-hidden="true"
-      >
-        RE
+      <span class="brand-wordmark" aria-label="Rafly Elektronik">
+        <span class="brand-name">Rafly</span>
+        <span class="brand-subtitle">Elektronik</span>
       </span>
-      <span>Rafly Elektronik</span>
     </a>
 
     <div id="navLinks" class="nav-links">
@@ -27,14 +24,14 @@ const navItems = [
       ))}
     </div>
 
-    <!-- <a href="#kontak" class="btn btn-primary hidden lg:inline-flex">
-      Chat WhatsApp <span aria-hidden="true">↗</span>
+    <!-- <a href="#kontak" class="header-cta btn btn-primary hidden lg:inline-flex">
+      Chat WhatsApp
     </a> -->
 
     <button
       id="menuToggle"
       type="button"
-      class="menu-toggle grid h-11 w-11 place-items-center text-white lg:hidden"
+      class="menu-toggle grid h-11 w-11 place-items-center border border-white/30 text-white transition-colors lg:hidden"
       aria-label="Buka menu"
       aria-controls="navLinks"
       aria-expanded="false"
@@ -67,7 +64,7 @@ const navItems = [
   }
 
   .site-header.scrolled {
-    background: rgb(251 250 247 / 0.88);
+    background: rgb(251 250 247 / 0.9);
     border-bottom-color: rgb(219 229 236 / 0.8);
     box-shadow: 0 8px 24px rgb(16 42 67 / 0.07);
     backdrop-filter: blur(18px);
@@ -83,17 +80,67 @@ const navItems = [
 
   .site-header.scrolled .menu-toggle {
     color: var(--color-navy);
+    border-color: var(--color-line);
   }
 
+   .brand-wordmark {
+     position: relative;
+     display: inline-flex;
+     flex-direction: column;
+     line-height: 0.88;
+   }
+
+   .brand-name {
+     font-size: 1.2rem;
+     font-weight: 700;
+     letter-spacing: -0.09em;
+     text-transform: uppercase;
+   }
+
+   .brand-subtitle {
+     margin-top: 0.35rem;
+     color: var(--color-ember);
+     font-family: var(--font-sans);
+     font-size: 1.2rem;
+     font-weight: 700;
+     letter-spacing: -0.04em;
+     text-transform: uppercase;
+   }
+
   .nav-link {
+    position: relative;
     font-size: 0.9rem;
     font-weight: 600;
     color: rgb(255 255 255 / 0.86);
     transition: color 0.2s ease;
   }
 
+  .header-cta {
+    min-height: 2.75rem;
+    padding-inline: 1.1rem;
+    font-size: 0.7rem;
+  }
+
   .nav-link:hover {
     color: var(--color-ember);
+  }
+
+  .nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.6rem;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
   .site-header.scrolled .nav-link:hover {
@@ -117,10 +164,10 @@ const navItems = [
       flex-direction: column;
       gap: 0;
       padding: 0.625rem;
-      background: var(--color-cream);
+      background: #fff;
       border: 1px solid var(--color-line);
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgb(16 42 67 / 0.08);
+      border-left: 4px solid var(--color-orange);
+      box-shadow: 8px 8px 0 rgb(9 34 56 / 0.12);
     }
 
     .nav-links.open {
@@ -129,8 +176,11 @@ const navItems = [
 
     .nav-link {
       padding: 0.75rem;
-      border-radius: 8px;
       color: #496277;
+    }
+
+    .nav-link::after {
+      display: none;
     }
 
     .nav-link:hover {
@@ -144,19 +194,52 @@ const navItems = [
   const panel = document.getElementById("navLinks");
   const header = document.getElementById("siteHeader");
 
-  const updateHeader = () => {
-    header.classList.toggle("scrolled", window.scrollY > 24);
-  };
+  if (
+    toggle instanceof HTMLButtonElement &&
+    panel instanceof HTMLElement &&
+    header instanceof HTMLElement
+  ) {
+    const updateHeader = () => {
+      header.classList.toggle("scrolled", window.scrollY > 24);
+    };
 
-  updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
+    const firstLink = panel.querySelector<HTMLAnchorElement>("a");
 
-  toggle?.addEventListener("click", () => {
-    const open = panel.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", String(open));
-  });
+    const closeMenu = (restoreFocus = false) => {
+      panel.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Buka menu");
+      if (restoreFocus) toggle.focus();
+    };
 
-  panel.querySelectorAll("a").forEach((link) =>
-    link.addEventListener("click", () => panel.classList.remove("open")),
-  );
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    toggle.addEventListener("click", () => {
+      const open = panel.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+      if (open) firstLink?.focus();
+    });
+
+    panel.querySelectorAll("a").forEach((link) =>
+      link.addEventListener("click", () => closeMenu()),
+    );
+
+    document.addEventListener("click", (event) => {
+      if (!panel.classList.contains("open")) return;
+      if (event.target instanceof Node && !header.contains(event.target)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1024) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !panel.classList.contains("open")) return;
+      closeMenu(true);
+    });
+  }
 </script>

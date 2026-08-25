@@ -1,33 +1,54 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import heroUrl from "../assets/hero.jpg";
+
+const galleryModules = import.meta.glob<ImageMetadata>(
+  "/src/assets/gallery/*.{jpg,jpeg}",
+  { eager: true, import: "default" },
+);
+
+const galleryPhotos = Object.entries(galleryModules)
+  .sort(([first], [second]) => first.localeCompare(second, undefined, { numeric: true }))
+  .map(([, src]) => src);
+
+const heroSlides = [heroUrl, ...galleryPhotos];
 ---
 
-<section id="beranda" class="relative flex items-center overflow-hidden min-h-dvh">
-  <Image
-    src={heroUrl}
-    alt=""
-    aria-hidden="true"
-    class="absolute inset-0 h-full w-full object-cover"
-    sizes="100vw"
-    fetchpriority="high"
-    decoding="async"
-  />
+<section id="beranda" class="relative flex min-h-[760px] items-center overflow-hidden bg-navy lg:min-h-dvh">
+  {heroSlides.map((slide, index) => (
+    <Image
+      src={slide}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-[1200ms] ease-in-out data-[active=true]:opacity-95 motion-reduce:transition-none"
+      data-hero-slide
+      data-active={index === 0 ? "true" : "false"}
+      sizes="100vw"
+      loading={index === 0 ? "eager" : "lazy"}
+      fetchpriority={index === 0 ? "high" : "low"}
+      decoding="async"
+    />
+  ))}
 
   <div
-    class="absolute inset-0 bg-linear-to-r from-black to-navy/60"
+    class="absolute inset-0 bg-[#04131f]/82 lg:bg-linear-to-r lg:from-[#04131f]/98 lg:via-navy/76 lg:to-navy/10"
     aria-hidden="true"
   ></div>
 
-  <div class="container relative py-20">
-    <div class="max-w-200">
-      <p class="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ember">
+  <div class="pointer-events-none absolute inset-0 opacity-40 soft-grid" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-y-0 left-[calc(50%-620px)] hidden w-px bg-white/10 xl:block" aria-hidden="true"></div>
+
+  <div class="container relative z-10 py-32 lg:py-40">
+    <div class="max-w-[820px]">
+      <p class="section-label text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ember">
         Servis resmi, solusi pasti
       </p>
       <h1
         class="mt-4 mb-6 font-display text-[clamp(2.7rem,7vw,5rem)] leading-[1.08] tracking-[-0.065em] text-white"
       >
-        Peralatan rumah rusak? <br /> Kami bantu pulihkan.
+        Peralatan rumah rusak?
+        <span class="block text-ember">Kami bantu pulihkan.</span>
       </h1>
       <p class="max-w-[700px] text-lg text-[#dce9f2]">
         Rafly Elektronik melayani servis kompor gas Rinnai, pompa air Shimizu,
@@ -36,16 +57,48 @@ import heroUrl from "../assets/hero.jpg";
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="#kontak" class="btn btn-primary">
-          Hubungi via WhatsApp <span aria-hidden="true">↗</span>
+          Hubungi via WhatsApp
+          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 10h12M11 5l5 5-5 5" />
+          </svg>
         </a>
         <a
           href="#layanan"
           class="btn border border-white/30 bg-white/10 text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
         >
-          Lihat layanan <span aria-hidden="true">↓</span>
+          Lihat layanan
+          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M10 3v14M5 12l5 5 5-5" />
+          </svg>
         </a>
       </div>
-     
+
+      <div class="mt-12 grid max-w-[760px] border-y border-white/20 text-sm text-[#c8d8e3] sm:grid-cols-3">
+        <div class="py-4 sm:pr-5">
+          <strong class="mr-2 font-display text-orange">01</strong> Authorized service
+        </div>
+        <div class="border-t border-white/20 py-4 sm:border-t-0 sm:border-l sm:px-5">
+          <strong class="mr-2 font-display text-orange">02</strong> Sparepart original
+        </div>
+        <div class="border-t border-white/20 py-4 sm:border-t-0 sm:border-l sm:pl-5">
+          <strong class="mr-2 font-display text-orange">03</strong> Teknisi berpengalaman
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll<HTMLElement>("[data-hero-slide]"));
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (slides.length > 1 && !reducedMotion.matches) {
+    let current = 0;
+
+    window.setInterval(() => {
+      slides[current]?.setAttribute("data-active", "false");
+      current = (current + 1) % slides.length;
+      slides[current]?.setAttribute("data-active", "true");
+    }, 5000);
+  }
+</script>

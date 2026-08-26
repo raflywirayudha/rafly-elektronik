@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import heroUrl from "../assets/hero.webp";
-import avatarUrl from "../assets/avatar.png";
 import { business } from "../data/business";
 
 const galleryModules = import.meta.glob<ImageMetadata>(
@@ -40,8 +39,7 @@ const whatsappHref = `https://wa.me/${business.contact.whatsapp.replace(/\D/g, "
   ></div>
 
   <div class="pointer-events-none absolute inset-0 opacity-40 soft-grid" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute inset-y-0 left-[calc(50%-620px)] hidden w-px bg-white/10 xl:block" aria-hidden="true"></div>
-
+  
   <div class="container relative z-10 py-32 lg:py-40">
     <div class="hero-copy max-w-205">
       <p class="section-label text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ember">

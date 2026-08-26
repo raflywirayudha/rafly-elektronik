@@ -24,6 +24,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
+    background-color: var(--color-navy);
   }
 
   body {
@@ -42,6 +43,23 @@
     color: #fff;
   }
 
+  ::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-navy);
+    border: 3px solid var(--color-cream);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-orange-dark);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-orange);
     outline-offset: 2px;
@@ -49,6 +67,31 @@
 }
 
 @layer components {
+
+  .brand-wordmark {
+     position: relative;
+     display: inline-flex;
+     flex-direction: column;
+     line-height: 0.88;
+   }
+
+   .brand-name {
+      font-size: 1.125rem;
+     font-weight: 700;
+     letter-spacing: -0.09em;
+     text-transform: uppercase;
+   }
+
+   .brand-subtitle {
+      margin-top: 0.35rem;
+      color: var(--color-ember);
+      font-family: var(--font-sans);
+      font-size: 1.125rem;
+     font-weight: 700;
+     letter-spacing: -0.04em;
+     text-transform: uppercase;
+   }
+
   .container {
     width: 100%;
     max-width: 1240px;
@@ -102,7 +145,7 @@
   }
 
   .btn-dark:hover {
-    background-color: #173b5b;
+    background-color: var(--color-blue);
     box-shadow: 6px 6px 0 rgb(9 34 56 / 0.22);
     transform: translate(-2px, -2px);
   }
@@ -125,6 +168,10 @@
 
   .btn-outline:hover {
     border-color: var(--color-navy);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
   }
 
   .kicker {

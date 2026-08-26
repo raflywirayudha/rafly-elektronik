@@ -23,5 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-#PRD
+#
 PRD.md
+PRODUCT.md
+DESIGN.md

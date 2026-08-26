@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
 const imageModules = import.meta.glob<ImageMetadata>(
-  "/src/assets/gallery/*.{jpg,jpeg}",
+  "/src/assets/gallery/*.webp",
   { eager: true, import: "default" },
 );
 
@@ -15,12 +15,13 @@ const photos = Object.entries(imageModules)
   .sort((a, b) => Number(a.label) - Number(b.label));
 ---
 
-<section id="galeri" class="border-b border-line/80 bg-white py-24 lg:py-[120px]">
+<section id="galeri" class="border-b border-line/80 bg-white py-24 lg:py-30">
   <div class="container">
     <div class="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end lg:mb-12">
       <div>
-        <h2 class="mt-3 max-w-[650px] font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-[1.08] tracking-[-0.055em] text-navy">
-          Galeri
+        <p class="section-label kicker">Galeri</p>
+        <h2 class="mt-3 max-w-162.5 font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-[1.08] tracking-[-0.055em] text-navy">
+           Layanan kami dalam dokumentasi
         </h2>
       </div>
     </div>
@@ -40,9 +41,9 @@ const photos = Object.entries(imageModules)
             loading="lazy"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-          <span class="absolute right-0 bottom-0 border-t border-l border-white/25 bg-navy/90 px-3 py-2 text-[0.65rem] font-bold tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          {/* <span class="absolute right-0 bottom-0 border-t border-l border-white/25 bg-navy/90 px-3 py-2 text-[0.65rem] font-bold tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             LIHAT FOTO {String(index + 1).padStart(2, "0")}
-          </span>
+          </span> */}
         </button>
       ))}
     </div>
